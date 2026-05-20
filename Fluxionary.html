@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fluxionary</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;}
+
+body{
+  background:#050505;
+  color:white;
+  overflow-x:hidden;
+}
+
+.glow{
+  position:fixed;
+  width:500px;
+  height:500px;
+  background:#00f5ff33;
+  filter:blur(120px);
+  border-radius:50%;
+  top:20%;
+  left:50%;
+  transform:translateX(-50%);
+  animation:pulse 4s infinite ease-in-out;
+  z-index:-1;
+}
+
+@keyframes pulse{
+  0%,100%{transform:translateX(-50%) scale(1);}
+  50%{transform:translateX(-50%) scale(1.2);}
+}
+
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 40px;
+  position:sticky;
+  top:0;
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.4);
+  border-bottom:1px solid #ffffff10;
+}
+
+.logo{font-weight:800;letter-spacing:3px;}
+
+nav a{
+  color:#aaa;
+  margin-left:20px;
+  text-decoration:none;
+}
+nav a:hover{color:white;}
+
+.hero{
+  height:90vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+.hero h1{
+  font-size:60px;
+}
+
+.hero span{color:#00f5ff;}
+
+.hero p{
+  max-width:600px;
+  color:#aaa;
+  margin-top:20px;
+}
+
+.btn{
+  margin-top:30px;
+  padding:12px 25px;
+  background:#00f5ff;
+  border:none;
+  color:black;
+  font-weight:bold;
+  border-radius:30px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.btn:hover{transform:scale(1.05);}
+
+/* FUTURE OVERLAY */
+.overlay{
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  opacity:0;
+  pointer-events:none;
+  transition:1s;
+}
+
+.overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.neonText{
+  font-size:40px;
+  color:#00f5ff;
+  animation:glowText 1.5s infinite alternate;
+}
+
+@keyframes glowText{
+  from{text-shadow:0 0 10px #00f5ff;}
+  to{text-shadow:0 0 40px #00f5ff;}
+}
+
+.scan{
+  width:200px;
+  height:2px;
+  background:#00f5ff;
+  margin-top:20px;
+  animation:scan 1s infinite linear;
+}
+
+@keyframes scan{
+  0%{transform:translateY(-30px);opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateY(30px);opacity:0;}
+}
+
+section{padding:80px 40px;}
+
+footer{
+  text-align:center;
+  padding:30px;
+  border-top:1px solid #ffffff10;
+  color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<nav>
+  <div class="logo">FLUXIONARY</div>
+  <div>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#future">Future</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Building the Future of <span>Apps</span></h1>
+  <p>Fluxionary builds next-gen apps for students, collaboration, and AI-powered systems.</p>
+  <button class="btn" onclick="startVision()">Explore Vision</button>
+</div>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p style="color:#aaa;max-width:700px;">
+    We create futuristic digital ecosystems for learning and collaboration. Note that Fluxionary is just a personal hobby project
+  </p>
+</section>
+
+<section id="projects">
+  <h2>Current Projects</h2>
+  <p style="color:#aaa;">Synchronous + SchoolStack Portal</p>
+</section>
+
+<section id="future">
+  <h2>Future Vision</h2>
+  <p style="color:#aaa;">
+    AI classrooms, smart collaboration, and real-time digital education systems.
+  </p>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p style="color:#aaa;">
+    fluxionaryofficialsupport@gmail.com
+  </p>
+</section>
+
+<footer>© 2026 Fluxionary</footer>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="neonText">Entering Future Vision...</div>
+  <div class="scan"></div>
+</div>
+
+<script>
+function startVision(){
+  const o = document.getElementById("overlay");
+  o.classList.add("active");
+
+  setTimeout(()=>{
+    o.innerHTML = `
+      <div class="neonText">Future Unlocked</div>
+      <div style="color:#aaa;margin-top:10px;text-align:center;max-width:300px;">
+        AI Systems • Smart Education • Real-time Collaboration • Fluxionary Ecosystem
+      </div>
+    `;
+  }, 2500);
+
+  setTimeout(()=>{
+    o.classList.remove("active");
+    setTimeout(()=>{
+      location.hash = "#future";
+    }, 800);
+  }, 5000);
+}
+</script>
+
+</body>
+</html>
