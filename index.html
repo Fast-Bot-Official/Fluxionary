@@ -6,95 +6,391 @@
 <title>Fluxionary</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap');
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,sans-serif;
+  scroll-behavior:smooth;
+}
 
 body{
-  background:#050505;
+  background:#030303;
   color:white;
   overflow-x:hidden;
 }
 
+/* CINEMATIC INTRO */
+.intro{
+  position:fixed;
+  inset:0;
+  background:black;
+  z-index:9999;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  animation:introFade 6s forwards;
+}
+
+.intro::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:
+  radial-gradient(circle at center,#00f5ff20 0%,transparent 60%);
+  animation:pulseGlow 3s infinite;
+}
+
+.introLogo{
+  font-size:70px;
+  font-weight:900;
+  letter-spacing:8px;
+  color:white;
+  position:relative;
+  overflow:hidden;
+  animation:zoomIn 2s ease;
+}
+
+.introLogo span{
+  color:#00f5ff;
+  text-shadow:0 0 20px #00f5ff;
+}
+
+.introLine{
+  width:0;
+  height:2px;
+  background:#00f5ff;
+  margin-top:20px;
+  animation:lineExpand 2s forwards;
+}
+
+.introText{
+  margin-top:20px;
+  color:#999;
+  letter-spacing:3px;
+  opacity:0;
+  animation:fadeText 2s forwards 1.5s;
+}
+
+@keyframes zoomIn{
+  from{
+    transform:scale(0.5);
+    opacity:0;
+    filter:blur(10px);
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+    filter:blur(0);
+  }
+}
+
+@keyframes lineExpand{
+  to{
+    width:300px;
+  }
+}
+
+@keyframes fadeText{
+  to{
+    opacity:1;
+  }
+}
+
+@keyframes introFade{
+  0%,80%{
+    opacity:1;
+    visibility:visible;
+  }
+  100%{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+
+@keyframes pulseGlow{
+  0%,100%{
+    transform:scale(1);
+    opacity:0.6;
+  }
+  50%{
+    transform:scale(1.1);
+    opacity:1;
+  }
+}
+
+/* BACKGROUND EFFECTS */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:-3;
+}
+
+.stars span{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  animation:moveStars linear infinite;
+}
+
+@keyframes moveStars{
+  from{
+    transform:translateY(0px);
+    opacity:1;
+  }
+  to{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+}
+
 .glow{
   position:fixed;
-  width:500px;
-  height:500px;
-  background:#00f5ff33;
-  filter:blur(120px);
+  width:600px;
+  height:600px;
+  background:#00f5ff25;
+  filter:blur(150px);
   border-radius:50%;
-  top:20%;
+  top:15%;
   left:50%;
   transform:translateX(-50%);
-  animation:pulse 4s infinite ease-in-out;
-  z-index:-1;
+  animation:pulse 5s infinite ease-in-out;
+  z-index:-2;
 }
 
 @keyframes pulse{
-  0%,100%{transform:translateX(-50%) scale(1);}
-  50%{transform:translateX(-50%) scale(1.2);}
+  0%,100%{
+    transform:translateX(-50%) scale(1);
+  }
+  50%{
+    transform:translateX(-50%) scale(1.2);
+  }
 }
 
+/* NAV */
 nav{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px 40px;
+  padding:22px 45px;
   position:sticky;
   top:0;
-  backdrop-filter:blur(10px);
-  background:rgba(0,0,0,0.4);
+  z-index:1000;
+  backdrop-filter:blur(15px);
+  background:rgba(0,0,0,0.35);
   border-bottom:1px solid #ffffff10;
 }
 
-.logo{font-weight:800;letter-spacing:3px;}
+.logo{
+  font-weight:900;
+  letter-spacing:4px;
+  font-size:20px;
+}
+
+.logo span{
+  color:#00f5ff;
+}
 
 nav a{
-  color:#aaa;
-  margin-left:20px;
+  color:#999;
+  margin-left:25px;
   text-decoration:none;
+  transition:0.3s;
+  position:relative;
 }
-nav a:hover{color:white;}
 
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  width:0%;
+  height:2px;
+  background:#00f5ff;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:white;
+}
+
+nav a:hover::after{
+  width:100%;
+}
+
+/* HERO */
 .hero{
-  height:90vh;
+  height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
   padding:20px;
+  position:relative;
 }
 
 .hero h1{
-  font-size:60px;
+  font-size:75px;
+  max-width:900px;
+  line-height:1.1;
+  animation:heroReveal 2s ease;
 }
 
-.hero span{color:#00f5ff;}
+.hero span{
+  color:#00f5ff;
+  text-shadow:0 0 20px #00f5ff;
+}
 
 .hero p{
-  max-width:600px;
-  color:#aaa;
-  margin-top:20px;
+  max-width:650px;
+  color:#999;
+  margin-top:25px;
+  font-size:18px;
+  line-height:1.7;
+  animation:fadeUp 2s ease;
+}
+
+.heroButtons{
+  display:flex;
+  gap:20px;
+  margin-top:40px;
+  flex-wrap:wrap;
 }
 
 .btn{
-  margin-top:30px;
-  padding:12px 25px;
-  background:#00f5ff;
+  padding:14px 30px;
   border:none;
-  color:black;
+  border-radius:40px;
   font-weight:bold;
-  border-radius:30px;
   cursor:pointer;
-  transition:0.3s;
+  transition:0.4s;
+  font-size:15px;
 }
-.btn:hover{transform:scale(1.05);}
+
+.primary{
+  background:#00f5ff;
+  color:black;
+  box-shadow:0 0 25px #00f5ff55;
+}
+
+.secondary{
+  background:transparent;
+  border:1px solid #00f5ff55;
+  color:white;
+}
+
+.btn:hover{
+  transform:translateY(-5px) scale(1.05);
+}
+
+@keyframes heroReveal{
+  from{
+    opacity:0;
+    transform:translateY(60px);
+    filter:blur(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+    filter:blur(0);
+  }
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* SECTIONS */
+section{
+  padding:100px 50px;
+}
+
+.sectionTitle{
+  font-size:45px;
+  margin-bottom:20px;
+}
+
+.sectionText{
+  color:#999;
+  max-width:800px;
+  line-height:1.8;
+}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+  margin-top:40px;
+}
+
+.card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid #ffffff10;
+  padding:30px;
+  border-radius:25px;
+  backdrop-filter:blur(15px);
+  transition:0.5s;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,#00f5ff11,transparent);
+  transform:translateX(-100%);
+  transition:0.8s;
+}
+
+.card:hover::before{
+  transform:translateX(100%);
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  border-color:#00f5ff55;
+  box-shadow:0 0 40px #00f5ff22;
+}
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.card p{
+  color:#aaa;
+  line-height:1.7;
+}
+
+.card a{
+  display:inline-block;
+  margin-top:15px;
+  color:#00f5ff;
+  text-decoration:none;
+}
 
 /* FUTURE OVERLAY */
 .overlay{
   position:fixed;
-  top:0;left:0;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
   background:black;
@@ -105,6 +401,7 @@ nav a:hover{color:white;}
   opacity:0;
   pointer-events:none;
   transition:1s;
+  z-index:999;
 }
 
 .overlay.active{
@@ -113,116 +410,331 @@ nav a:hover{color:white;}
 }
 
 .neonText{
-  font-size:40px;
+  font-size:50px;
   color:#00f5ff;
+  text-align:center;
   animation:glowText 1.5s infinite alternate;
 }
 
 @keyframes glowText{
-  from{text-shadow:0 0 10px #00f5ff;}
-  to{text-shadow:0 0 40px #00f5ff;}
+  from{
+    text-shadow:0 0 10px #00f5ff;
+  }
+  to{
+    text-shadow:0 0 40px #00f5ff;
+  }
 }
 
 .scan{
-  width:200px;
+  width:250px;
   height:2px;
   background:#00f5ff;
-  margin-top:20px;
+  margin-top:25px;
   animation:scan 1s infinite linear;
 }
 
 @keyframes scan{
-  0%{transform:translateY(-30px);opacity:0;}
-  50%{opacity:1;}
-  100%{transform:translateY(30px);opacity:0;}
+  0%{
+    transform:translateY(-40px);
+    opacity:0;
+  }
+  50%{
+    opacity:1;
+  }
+  100%{
+    transform:translateY(40px);
+    opacity:0;
+  }
 }
 
-section{padding:80px 40px;}
-
+/* FOOTER */
 footer{
   text-align:center;
-  padding:30px;
+  padding:40px;
   border-top:1px solid #ffffff10;
   color:#777;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  nav{
+    padding:18px 20px;
+  }
+
+  nav a{
+    margin-left:12px;
+    font-size:13px;
+  }
+
+  .hero h1{
+    font-size:45px;
+  }
+
+  .sectionTitle{
+    font-size:35px;
+  }
+
+  .introLogo{
+    font-size:40px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- CINEMATIC INTRO -->
+<div class="intro">
+  <div class="introLogo">
+    FLUX<span>IONARY</span>
+  </div>
+
+  <div class="introLine"></div>
+
+  <div class="introText">
+    ENTERING THE DIGITAL FUTURE
+  </div>
+</div>
+
+<!-- STARS -->
+<div class="stars" id="stars"></div>
+
 <div class="glow"></div>
 
+<!-- NAVBAR -->
 <nav>
-  <div class="logo">FLUXIONARY</div>
+  <div class="logo">FLUX<span>IONARY</span></div>
+
   <div>
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
+    <a href="#published">Published</a>
     <a href="#future">Future</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-  <h1>Building the Future of <span>Apps</span></h1>
-  <p>Fluxionary builds next-gen apps for students, collaboration, and AI-powered systems.</p>
-  <button class="btn" onclick="startVision()">Explore Vision</button>
+
+  <h1>
+    Building the Future of
+    <span>Apps & AI Systems</span>
+  </h1>
+
+  <p>
+    Fluxionary creates futuristic digital ecosystems for students,
+    collaboration, AI systems, and next-generation real-time experiences.
+  </p>
+
+  <div class="heroButtons">
+    <button class="btn primary" onclick="startVision()">
+      Explore Vision
+    </button>
+
+    <button class="btn secondary" onclick="location.href='#published'">
+      Published Projects
+    </button>
+  </div>
+
 </div>
 
+<!-- ABOUT -->
 <section id="about">
-  <h2>About Us</h2>
-  <p style="color:#aaa;max-width:700px;">
-    We create futuristic digital ecosystems for learning and collaboration. Note that Fluxionary is just a personal hobby project
+
+  <h2 class="sectionTitle">About Fluxionary</h2>
+
+  <p class="sectionText">
+    Fluxionary is a futuristic personal hobby project focused on creating
+    cinematic digital ecosystems, AI-powered systems, student platforms,
+    collaboration technologies, and futuristic interfaces.
   </p>
+
 </section>
 
+<!-- CURRENT PROJECTS -->
 <section id="projects">
-  <h2>Current Projects</h2>
-  <p style="color:#aaa;">Synchronous + SchoolStack Portal</p>
+
+  <h2 class="sectionTitle">Current Projects</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Synchronous</h3>
+      <p>
+        A futuristic collaboration and workspace platform focused on
+        productivity, communication, and modern UI systems.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>SchoolStack Portal</h3>
+      <p>
+        Smart educational ecosystem for students featuring AI systems,
+        organization tools, and real-time learning concepts.
+      </p>
+    </div>
+
+  </div>
+
 </section>
 
+<!-- PUBLISHED PROJECTS -->
+<section id="published">
+
+  <h2 class="sectionTitle">Published Projects</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Synchronous</h3>
+
+      <p>
+        Publicly available futuristic workspace and collaboration platform
+        developed under Fluxionary.
+      </p>
+
+      <a href="https://fast-bot-official.github.io/Synchronous/" target="_blank">
+        Open Project →
+      </a>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FUTURE -->
 <section id="future">
-  <h2>Future Vision</h2>
-  <p style="color:#aaa;">
-    AI classrooms, smart collaboration, and real-time digital education systems.
-  </p>
+
+  <h2 class="sectionTitle">Future Vision</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>AI Classrooms</h3>
+      <p>
+        Smart digital education systems powered by AI and live collaboration.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Real-time Ecosystems</h3>
+      <p>
+        Advanced synchronized communication and productivity environments.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Next-Gen Interfaces</h3>
+      <p>
+        Cinematic futuristic interfaces with immersive experiences.
+      </p>
+    </div>
+
+  </div>
+
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
-  <h2>Contact</h2>
-  <p style="color:#aaa;">
+
+  <h2 class="sectionTitle">Contact</h2>
+
+  <p class="sectionText">
     fluxionaryofficialsupport@gmail.com
   </p>
+
 </section>
 
-<footer>© 2026 Fluxionary</footer>
+<footer>
+  © 2026 Fluxionary — Designed For The Future
+</footer>
 
 <!-- OVERLAY -->
 <div class="overlay" id="overlay">
-  <div class="neonText">Entering Future Vision...</div>
+
+  <div class="neonText">
+    Entering Future Vision...
+  </div>
+
   <div class="scan"></div>
+
 </div>
 
 <script>
+
+/* STAR GENERATOR */
+const stars = document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+
+  const s = document.createElement("span");
+
+  s.style.left = Math.random()*100 + "%";
+  s.style.top = Math.random()*100 + "%";
+
+  const size = Math.random()*3;
+
+  s.style.width = size + "px";
+  s.style.height = size + "px";
+
+  s.style.animationDuration =
+  (Math.random()*10+5) + "s";
+
+  s.style.animationDelay =
+  Math.random()*5 + "s";
+
+  stars.appendChild(s);
+}
+
+/* FUTURE VISION */
 function startVision(){
+
   const o = document.getElementById("overlay");
+
   o.classList.add("active");
 
   setTimeout(()=>{
+
     o.innerHTML = `
-      <div class="neonText">Future Unlocked</div>
-      <div style="color:#aaa;margin-top:10px;text-align:center;max-width:300px;">
-        AI Systems • Smart Education • Real-time Collaboration • Fluxionary Ecosystem
+
+      <div class="neonText">
+        Future Unlocked
       </div>
+
+      <div style="
+      color:#aaa;
+      margin-top:20px;
+      text-align:center;
+      max-width:500px;
+      line-height:1.8;
+      font-size:18px;
+      ">
+
+      AI Systems • Smart Education •
+      Real-time Collaboration •
+      Fluxionary Ecosystem
+
+      </div>
+
     `;
-  }, 2500);
+
+  },2500);
 
   setTimeout(()=>{
+
     o.classList.remove("active");
+
     setTimeout(()=>{
+
       location.hash = "#future";
-    }, 800);
-  }, 5000);
+
+    },800);
+
+  },5500);
 }
+
 </script>
 
 </body>
